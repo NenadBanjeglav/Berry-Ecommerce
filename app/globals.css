@@ -73,3 +73,7 @@ body {
     @apply duration-300 ease-in-out transition-all cursor-pointer;
   }
 }
+
+body {
+  font-family: var(--font-poppins), sans-serif;
+}
