@@ -17,8 +17,8 @@ import {
 const Header = async () => {
   const user = await currentUser();
   return (
-    <header className="w-full bg-white py-4 border-b border-b-gray-400">
-      <Container className="flex items-center justify-between gap-5">
+    <header className="w-full bg-white py-4 border-b border-b-gray-400 sticky top-0 z-50">
+      <Container className="flex md:items-center items-center justify-between gap-5 flex-col md:flex-row">
         <Link href="/">
           <Image
             src="/images/logo.png"
@@ -44,19 +44,19 @@ const Header = async () => {
                 href="/orders"
                 className="flex items-center text-sm gap-2 border border-gray-200 px-2 py-1 rounded-md shadow-md hover:shadow-none hoverEffect"
               >
-                <ShoppingBasket className="text-darkBlue size-6" />
+                <ShoppingBasket className="text-darkBlue md:size-6 size-5" />
                 <div className="flex flex-col">
                   <p className="text-xs">
                     <span className="font-semibold">0</span> items
                   </p>
-                  <p className="font-semibold">Orders</p>
+                  <p className="font-semibold hidden md:block">Orders</p>
                 </div>
               </Link>
             </SignedIn>
             <SignedIn>
               <div className="flex items-center text-sm gap-2 border border-gray-200 px-2 py-1 rounded-md shadow-md hover:shadow-none hoverEffect">
                 <UserButton />
-                <div className="flex flex-col">
+                <div className="md:inline-flex flex-col hidden">
                   <p className="text-xs">Welcome Back</p>
                   <p className="font-semibold">{user?.fullName}</p>
                 </div>

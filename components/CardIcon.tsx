@@ -15,14 +15,14 @@ const CardIcon = () => {
   return (
     <Link
       href="/cart"
-      className="flex items-center text-sm gap-2 border border-gray-200 px-2 py-1 rounded-md shadow-md hover:shadow-none hoverEffect"
+      className="flex  items-center text-xs md:text-sm md:gap-2 gap-1 border border-gray-200 px-2 py-1 rounded-md shadow-md hover:shadow-none hoverEffect"
     >
-      <ShoppingCart className="text-darkBlue size-6" />
+      <ShoppingCart className="text-darkBlue md:size-6 size-5" />
       <div className="flex flex-col">
         <p className="text-xs">
           <span className="font-semibold">0</span> items
         </p>
-        <p className="font-semibold">Cart</p>
+        <p className="font-semibold hidden md:block">Cart</p>
       </div>
     </Link>
   );

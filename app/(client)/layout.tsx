@@ -5,6 +5,7 @@ import React from "react";
 import Header from "@/components/Header";
 import { ClerkProvider } from "@clerk/nextjs";
 import Footer from "@/components/Footer";
+import { Toaster } from "@/components/ui/sonner";
 
 const poppins = localFont({
   src: "../fonts/Poppins.woff2",
@@ -30,6 +31,7 @@ export default function RootLayout({
           <Header />
           {children}
           <Footer />
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>
