@@ -58,25 +58,25 @@ const userCartStore = create<CartState>()(
           items: state.items.filter(({ product }) => product._id !== productId),
         })),
       resetCart: () => set({ items: [] }),
-      //@ts-ignore
+
       getTotalPrice: () => {
         return get().items.reduce(
-          //@ts-ignore
-          (total, item) => total + (item.product.price ?? 0) * item.quantity
+          (total, item) => total + (item.product.price ?? 0) * item.quantity,
+          0 // Add an initial value of 0
         );
       },
-      //@ts-ignore
+
       getSubtotalPrice: () => {
         return get().items.reduce((total, item) => {
           const price = item.product.price ?? 0;
           const discount = ((item.product.discount ?? 0) * price) / 100;
-          const discountedPrice = price + discount;
-          //@ts-ignore
+          const discountedPrice = price - discount; // Subtract the discount, not add
+
           return total + discountedPrice * item.quantity;
-        });
+        }, 0); // Add an initial value of 0
       },
-      getItemCount: (productId) => {
-        const item = get().items.find((item) => item.product._id === productId);
+      getItemCount: (producId) => {
+        const item = get().items.find((item) => item.product._id === producId);
         return item ? item.quantity : 0;
       },
       getGroupedItems: () => get().items,

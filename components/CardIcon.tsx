@@ -7,8 +7,10 @@ import React, { useEffect, useState } from "react";
 
 const CartIcon = () => {
   const [isClient, setIsClient] = useState(false);
-  const { getGroupedItems } = userCartStore();
-  const groupedItems = getGroupedItems();
+
+  const itemCount = userCartStore((state) =>
+    state.items.reduce((total, item) => total + item.quantity, 0)
+  );
 
   useEffect(() => {
     setIsClient(true);
@@ -23,10 +25,7 @@ const CartIcon = () => {
       <ShoppingCart className="text-darkBlue md:size-6 size-5" />
       <div className="flex flex-col">
         <p className="text-xs">
-          <span className="font-semibold">
-            {groupedItems.length ? groupedItems.length : 0}
-          </span>{" "}
-          items
+          <span className="font-semibold">{itemCount}</span> items
         </p>
         <p className="font-semibold hidden md:block">Cart</p>
       </div>
