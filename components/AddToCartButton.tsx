@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import QuantityButtons from "./QuantityButtons";
 import PriceFormater from "./PriceFormater";
+import userCartStore from "@/store";
 
 interface Props {
   product: Product;
@@ -15,6 +16,7 @@ interface Props {
 
 const AddToCartButton = ({ product, className }: Props) => {
   const [isClient, setIsClient] = useState(false);
+  const { addItem, getItemCount } = userCartStore();
 
   useEffect(() => {
     setIsClient(true);
@@ -22,10 +24,13 @@ const AddToCartButton = ({ product, className }: Props) => {
 
   if (!isClient) return null;
 
+  const itemCount = getItemCount(product._id);
+  const isOutOfStock = product.stock === 0;
+
   const handleAddToCart = () => {
-    toast("Button Clicked");
+    addItem(product);
+    toast.success(`${product.name?.substring(0, 12)}...added successfully!`);
   };
-  const itemCount = 0;
 
   return (
     <div>
@@ -45,6 +50,7 @@ const AddToCartButton = ({ product, className }: Props) => {
       ) : (
         <Button
           onClick={handleAddToCart}
+          disabled={isOutOfStock}
           className={cn(
             "bg-darkBlue/10 text-black border-darkBlue py-2 mt-2 border w-full rounded-md font-medium hover:bg-darkBlue hover:text-white hoverEffect disabled:hover:cursor-not-allowed disabled:bg-darkBlue/10 disabled:text-gray-400 disabled:border-darkBlue/10",
             className

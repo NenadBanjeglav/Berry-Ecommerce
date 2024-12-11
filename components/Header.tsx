@@ -3,7 +3,7 @@ import React from "react";
 import Container from "./Container";
 import Form from "next/form";
 import Link from "next/link";
-import CardIcon from "./CardIcon";
+import CartIcon from "./CardIcon";
 import { ShoppingBasket, User } from "lucide-react";
 import { currentUser } from "@clerk/nextjs/server";
 import {
@@ -37,7 +37,7 @@ const Header = async () => {
           />
         </Form>
         <div className="flex items-center gap-5">
-          <CardIcon />
+          <CartIcon />
           <ClerkLoaded>
             <SignedIn>
               <Link

@@ -1,11 +1,14 @@
 "use client";
 
+import userCartStore from "@/store";
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
-const CardIcon = () => {
+const CartIcon = () => {
   const [isClient, setIsClient] = useState(false);
+  const { getGroupedItems } = userCartStore();
+  const groupedItems = getGroupedItems();
 
   useEffect(() => {
     setIsClient(true);
@@ -20,7 +23,10 @@ const CardIcon = () => {
       <ShoppingCart className="text-darkBlue md:size-6 size-5" />
       <div className="flex flex-col">
         <p className="text-xs">
-          <span className="font-semibold">0</span> items
+          <span className="font-semibold">
+            {groupedItems.length ? groupedItems.length : 0}
+          </span>{" "}
+          items
         </p>
         <p className="font-semibold hidden md:block">Cart</p>
       </div>
@@ -28,4 +34,4 @@ const CardIcon = () => {
   );
 };
 
-export default CardIcon;
+export default CartIcon;

@@ -6,6 +6,7 @@ import { Button } from "./ui/button";
 import { Minus, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import userCartStore from "@/store";
 
 interface Props {
   product: Product;
@@ -14,13 +15,17 @@ interface Props {
 }
 
 const QuantityButtons = ({ product, className, borderStyle }: Props) => {
+  const { addItem, removeItem, getItemCount } = userCartStore();
+
   const handleRemoveProduct = () => {
-    toast("Remove Clicked");
+    removeItem(product._id);
+    toast.success(`${product.name}...removed successfully!`);
   };
   const handleAddProduct = () => {
-    toast("Add Clicked");
+    addItem(product);
+    toast.success(`${product.name}...added successfully!`);
   };
-  const itemCount = 0;
+  const itemCount = getItemCount(product._id);
   return (
     <div className={cn("flex items-center gap-1 pb-1 text-base", className)}>
       <Button

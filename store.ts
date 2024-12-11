@@ -11,12 +11,12 @@ interface CartState {
   items: CartItem[];
   addItem: (product: Product) => void;
   removeItem: (productId: string) => void;
-  //   deleteCartProduct: (productId: string) => void;
-  //   resetCart: () => void;
-  //   getTotalPrice: () => number;
-  //   getSubtotalPrice: () => number;
-  //   getItemCount: (productId: string) => number;
-  //   getGroupedItems: () => CartItem[];
+  deleteCartProduct: (productId: string) => void;
+  resetCart: () => void;
+  getTotalPrice: () => number;
+  getSubtotalPrice: () => number;
+  getItemCount: (productId: string) => number;
+  getGroupedItems: () => CartItem[];
 }
 
 const userCartStore = create<CartState>()(
@@ -53,7 +53,35 @@ const userCartStore = create<CartState>()(
             return acc;
           }, [] as CartItem[]),
         })),
+      deleteCartProduct: (productId) =>
+        set((state) => ({
+          items: state.items.filter(({ product }) => product._id !== productId),
+        })),
+      resetCart: () => set({ items: [] }),
+      //@ts-ignore
+      getTotalPrice: () => {
+        return get().items.reduce(
+          //@ts-ignore
+          (total, item) => total + (item.product.price ?? 0) * item.quantity
+        );
+      },
+      //@ts-ignore
+      getSubtotalPrice: () => {
+        return get().items.reduce((total, item) => {
+          const price = item.product.price ?? 0;
+          const discount = ((item.product.discount ?? 0) * price) / 100;
+          const discountedPrice = price + discount;
+          //@ts-ignore
+          return total + discountedPrice * item.quantity;
+        });
+      },
+      getItemCount: (productId) => {
+        const item = get().items.find((item) => item.product._id === productId);
+        return item ? item.quantity : 0;
+      },
+      getGroupedItems: () => get().items,
     }),
+
     { name: "cart-store" }
   )
 );
