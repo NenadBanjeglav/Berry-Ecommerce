@@ -20,6 +20,33 @@ export const getSale = async () => {
   }
 };
 
+export const getProducts = async (
+  category = "",
+  sortField = "price",
+  sortOrder = "desc"
+) => {
+  try {
+    let dynamicQuery = `*[_type == "product"`;
+
+    // Add category filter if provided
+    if (category) {
+      dynamicQuery += ` && category->name == "${category}"`;
+    }
+
+    // Close the filter section and add sorting
+    dynamicQuery += `] | order(${sortField} ${sortOrder})`;
+
+    const products = await sanityFetch({
+      query: dynamicQuery,
+    });
+
+    return products.data || [];
+  } catch (error) {
+    console.error("Error fetching Products data:", error);
+    return [];
+  }
+};
+
 export const getAllProducts = async () => {
   try {
     const products = await sanityFetch({

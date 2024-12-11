@@ -1,6 +1,11 @@
 import DiscountBanner from "@/components/DiscountBanner";
 import ProductsList from "@/components/ProductsList";
-import { getAllCategories, getAllProducts, getSale } from "@/sanity/helpers";
+import {
+  getAllCategories,
+  getAllProducts,
+  getProducts,
+  getSale,
+} from "@/sanity/helpers";
 
 export default async function Home() {
   const sales = await getSale();

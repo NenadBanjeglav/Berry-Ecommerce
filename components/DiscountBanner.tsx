@@ -1,3 +1,5 @@
+"use client";
+
 import { SALE_QUERYResult } from "@/sanity.types";
 import React from "react";
 import {
@@ -12,10 +14,18 @@ import { Badge } from "./ui/badge";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import { Button } from "./ui/button";
+import Autoplay from "embla-carousel-autoplay";
 
 const DiscountBanner = ({ sales }: { sales: SALE_QUERYResult }) => {
   return (
-    <Carousel className="w-full max-w-screen-xl mx-auto my-10">
+    <Carousel
+      className="w-full max-w-screen-xl mx-auto my-10"
+      plugins={[
+        Autoplay({
+          delay: 4000,
+        }),
+      ]}
+    >
       <CarouselContent>
         {sales.map((sale) => (
           <CarouselItem key={sale._id}>

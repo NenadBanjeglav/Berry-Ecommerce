@@ -47,7 +47,7 @@ const Header = async () => {
                 <ShoppingBasket className="text-darkBlue md:size-6 size-5" />
                 <div className="flex flex-col">
                   <p className="text-xs">
-                    <span className="font-semibold">0</span> items
+                    <span className="font-semibold">0</span> orders
                   </p>
                   <p className="font-semibold hidden md:block">Orders</p>
                 </div>
