@@ -1,5 +1,4 @@
 {
-  "plugins": ["n"],
   "extends": [
     "next/core-web-vitals",
     "standard",

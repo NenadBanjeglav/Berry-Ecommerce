@@ -99,7 +99,7 @@ export type Order = {
     _key: string;
   }>;
   createdAt?: string;
-  status?: "pending" | "paid" | "shipped" | "delivered" | "cancelled";
+  status?: "confirmed" | "shipped";
 };
 
 export type Product = {
@@ -420,6 +420,68 @@ export type PRODUCT_BY_CATEGORY_QUERYResult = Array<{
   label?: string;
   status?: "hot" | "new" | "sale";
 }>;
+// Variable: MY_ORDERS_QUERY
+// Query: *[      _type == "order" && clerkUserId == $userId  ] | order(orderDate desc) {      ...,      products[]{          ...,          product->      }  }
+export type MY_ORDERS_QUERYResult = Array<{
+  _id: string;
+  _type: "order";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  orderNumber?: string;
+  clerkUserId?: string;
+  customerName?: string;
+  email?: string;
+  phone?: string;
+  city?: string;
+  street?: string;
+  postalCode?: string;
+  companyName?: string;
+  pib?: string;
+  message?: string;
+  total?: number;
+  discountedPrice?: number;
+  amountDiscount?: number;
+  products: Array<{
+    product: {
+      _id: string;
+      _type: "product";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      name?: string;
+      slug?: Slug;
+      image?: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+      };
+      description?: string;
+      price?: number;
+      discount?: number;
+      categories?: Array<{
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        _key: string;
+        [internalGroqTypeReferenceTo]?: "category";
+      }>;
+      stock?: number;
+      label?: string;
+      status?: "hot" | "new" | "sale";
+    } | null;
+    quantity?: number;
+    _key: string;
+  }> | null;
+  createdAt?: string;
+  status?: "confirmed" | "shipped";
+}>;
 
 // Query TypeMap
 import "@sanity/client";
@@ -431,5 +493,6 @@ declare module "@sanity/client" {
     "*[_type == \"product\" && slug.current == $slug] | order(name asc)[0]": PRODUCT_BY_SLUGResult;
     "*[_type == \"product\" && name match $searchParam] | order(name asc)": PRODUCT_SEARCH_QUERYResult;
     "*[_type == \"product\" && references(*[_type == \"category\" && slug.current == $categorySlug]._id)] | order(name asc)": PRODUCT_BY_CATEGORY_QUERYResult;
+    "\n  *[\n      _type == \"order\" && clerkUserId == $userId\n  ] | order(orderDate desc) {\n      ...,\n      products[]{\n          ...,\n          product->\n      }\n  }\n  ": MY_ORDERS_QUERYResult;
   }
 }

@@ -4,6 +4,7 @@ import { backendClient } from "../lib/backendClient";
 import { sanityFetch } from "../lib/live";
 import {
   CATEGORIES_QUERY,
+  MY_ORDERS_QUERY,
   PRODUCT_BY_CATEGORY_QUERY,
   PRODUCT_BY_SLUG,
   PRODUCT_SEARCH_QUERY,
@@ -133,3 +134,20 @@ export async function createOrder(orderData: any) {
     return { success: false, error: "Failed to create order" };
   }
 }
+
+export const getUserOrders = async (userId: string) => {
+  if (!userId) {
+    throw new Error("User ID is required!");
+  }
+
+  try {
+    const orders = await sanityFetch({
+      query: MY_ORDERS_QUERY,
+      params: { userId },
+    });
+    return orders.data || [];
+  } catch (error) {
+    console.error(`Fetching user order Error:`, error);
+    return [];
+  }
+};

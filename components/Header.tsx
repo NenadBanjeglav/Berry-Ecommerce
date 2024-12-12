@@ -4,7 +4,7 @@ import Container from "./Container";
 import Form from "next/form";
 import Link from "next/link";
 import CartIcon from "./CardIcon";
-import { Package, ShoppingBasket, User } from "lucide-react";
+import { Package, User } from "lucide-react";
 import { currentUser } from "@clerk/nextjs/server";
 import {
   ClerkLoaded,
@@ -13,9 +13,17 @@ import {
   SignInButton,
   UserButton,
 } from "@clerk/nextjs";
+import { getUserOrders } from "@/sanity/helpers";
 
 const Header = async () => {
   const user = await currentUser();
+
+  let orders;
+
+  if (user?.id) {
+    orders = await getUserOrders(user.id);
+  }
+
   return (
     <header className="w-full bg-white py-4 border-b border-b-gray-400 sticky top-0 z-50">
       <Container className="flex md:items-center items-center justify-between gap-5 flex-col md:flex-row">
@@ -47,7 +55,10 @@ const Header = async () => {
                 <Package className="text-darkBlue md:size-6 size-5" />
                 <div className="flex flex-col">
                   <p className="text-xs">
-                    <span className="font-semibold">0</span> orders
+                    <span className="font-semibold">
+                      {orders && orders?.length > 0 ? orders?.length : 0}
+                    </span>{" "}
+                    orders
                   </p>
                   <p className="font-semibold hidden md:block">Orders</p>
                 </div>
