@@ -4,7 +4,7 @@ import Container from "./Container";
 import Form from "next/form";
 import Link from "next/link";
 import CartIcon from "./CardIcon";
-import { ShoppingBasket, User } from "lucide-react";
+import { Package, ShoppingBasket, User } from "lucide-react";
 import { currentUser } from "@clerk/nextjs/server";
 import {
   ClerkLoaded,
@@ -44,7 +44,7 @@ const Header = async () => {
                 href="/orders"
                 className="flex items-center text-sm gap-2 border border-gray-200 px-2 py-1 rounded-md shadow-md hover:shadow-none hoverEffect"
               >
-                <ShoppingBasket className="text-darkBlue md:size-6 size-5" />
+                <Package className="text-darkBlue md:size-6 size-5" />
                 <div className="flex flex-col">
                   <p className="text-xs">
                     <span className="font-semibold">0</span> orders

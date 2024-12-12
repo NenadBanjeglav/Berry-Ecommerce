@@ -68,6 +68,40 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type Order = {
+  _id: string;
+  _type: "order";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  orderNumber?: string;
+  clerkUserId?: string;
+  customerName?: string;
+  email?: string;
+  phone?: string;
+  city?: string;
+  street?: string;
+  postalCode?: string;
+  companyName?: string;
+  pib?: string;
+  message?: string;
+  total?: number;
+  discountedPrice?: number;
+  amountDiscount?: number;
+  products?: Array<{
+    product?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "product";
+    };
+    quantity?: number;
+    _key: string;
+  }>;
+  createdAt?: string;
+  status?: "pending" | "paid" | "shipped" | "delivered" | "cancelled";
+};
+
 export type Product = {
   _id: string;
   _type: "product";
@@ -203,7 +237,7 @@ export type Slug = {
   source?: string;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Product | Sale | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Category | Slug;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Order | Product | Sale | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Category | Slug;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/helpers/queries.ts
 // Variable: SALE_QUERY

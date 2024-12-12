@@ -1,3 +1,6 @@
+"use server";
+
+import { backendClient } from "../lib/backendClient";
 import { sanityFetch } from "../lib/live";
 import {
   CATEGORIES_QUERY,
@@ -117,3 +120,16 @@ export const getProductsByCategory = async (categorySlug: string) => {
     return [];
   }
 };
+
+export async function createOrder(orderData: any) {
+  try {
+    const newOrder = await backendClient.create({
+      ...orderData,
+    });
+
+    return { success: true, newOrder };
+  } catch (error) {
+    console.error("Error creating order:", error);
+    return { success: false, error: "Failed to create order" };
+  }
+}

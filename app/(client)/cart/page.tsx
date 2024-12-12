@@ -29,7 +29,6 @@ import OrderForm from "@/components/OrderForm";
 const CartPage = () => {
   const { user } = useUser();
   const [isClient, setIsClient] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const {
     deleteCartProduct,
@@ -107,12 +106,15 @@ const CartPage = () => {
                               Proceed to Checkout
                             </Button>
                           </DialogTrigger>
-                          <DialogContent className="max-h-[90vh] overflow-y-auto">
+                          <DialogContent className="max-h-[90vh] overflow-y-auto scrollbar-thin">
                             <DialogHeader>
                               <DialogTitle>Buyer Details</DialogTitle>
                               <DialogDescription className="sr-only" />
                             </DialogHeader>
-                            <OrderForm user={user || undefined} />
+                            <OrderForm
+                              user={user!}
+                              orderItems={groupedItems!}
+                            />
                           </DialogContent>
                         </Dialog>
                         <Link
@@ -218,7 +220,7 @@ const CartPage = () => {
                           <DialogTitle>Buyer Details</DialogTitle>
                           <DialogDescription className="sr-only" />
                         </DialogHeader>
-                        <OrderForm user={user || undefined} />
+                        <OrderForm user={user!} orderItems={groupedItems!} />
                       </DialogContent>
                     </Dialog>
 

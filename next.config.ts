@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  env: {
+    SANITY_API_READ_TOKEN: process.env.SANITY_API_READ_TOKEN,
+  },
 };
 
 export default nextConfig;
